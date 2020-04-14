@@ -1,0 +1,8 @@
+.rs-error-view {
+  color: black;
+  text-align: center;
+}
+
+.rs-error-view--padding {
+  padding: 20px;
+}
