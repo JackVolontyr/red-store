@@ -16,11 +16,13 @@ class BookList extends Component {
   render() {
     const { books } = this.props;
 
-    const elements = books.map(({ id, ...book }) => <li key={id}>
-      {id}) <BookItem book={book} />
+    const elements = books.map(({ id, ...book }) => <li className="col-6" key={id}>
+      <BookItem book={book} />
     </li>);
 
-    return <ul className="rs-book-list">{elements}</ul>
+    return <div className="row">
+      <ul className="rs-book-list d-flex flex-wrap">{elements}</ul>
+    </div>
   }
 }
 

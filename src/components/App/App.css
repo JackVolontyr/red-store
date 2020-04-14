@@ -1,1 +1,19 @@
+html, body { 
+  font-family: 'Oswald', sans-serif; 
+}
+
+.rs-font { 
+  font-family: 'Girassol', cursive; 
+}
+
+[class^="col-"] {
+  padding: 0 5px;
+}
+
 .rs-app {}
+
+.rs-add-to-cart {
+  max-width: 80px;
+  margin-top: auto;
+  margin-bottom: 10px;
+}

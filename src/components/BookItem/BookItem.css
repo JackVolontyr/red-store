@@ -1,0 +1,25 @@
+.rs-book-item {
+  margin: 5px 0;
+}
+
+.rs-book-item__cover img {
+  max-width: 120px;
+  height: 180px;
+}
+
+.rs-book-item__info {
+  padding: 0 10px;
+}
+
+.rs-book-item__title {
+  font-size: 1.4rem;
+}
+
+.rs-book-item__author {
+  font-size: 1.2rem;
+}
+
+.rs-book-item__price {
+  color: crimson;
+  font-size: 2rem;
+}

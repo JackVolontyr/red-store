@@ -1,7 +1,5 @@
-import React from 'react'; 
+import React, { Fragment } from 'react'; 
 
-const CartPage = () => <div>
-  CartPage!
-</div>
+const CartPage = () => <Fragment></Fragment>
 
 export default CartPage;
