@@ -1,7 +1,4 @@
-import compose from './compose';
-import withBookstoreServiceContext from './withBookstoreServiceContext';
+import composeHoc from './composeHoc';
+import connectHoc from './connectHoc';
 
-export {
-  compose,
-  withBookstoreServiceContext
-}
+export { composeHoc, connectHoc }
