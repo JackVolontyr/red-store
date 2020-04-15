@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import BookList from '../BookList';
 import Cart from '../Cart/Cart';
+import BookListContainer from '../../containers/BookListContainer';
 
 const HomePage = () => <Fragment>
-  <BookList />
+  <BookListContainer />
   <Cart />
 </Fragment>
 
