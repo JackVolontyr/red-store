@@ -1,46 +1,60 @@
 import { connect } from 'react-redux';
-import { loadBooks } from '../../actions';
+import { uploadBooks, resetBooks, errorBooks } from '../../actions';
 
 import React, { Component } from 'react';
 import BookItem from '../BookItem';
+import Spinner from '../Spinner';
+import ErrorView from '../ErrorView';
 import { composeHoc, connectHoc } from '../Hoc';
 
 import './BookList.css';
 
 class BookList extends Component {
   componentDidMount() {
-    const { bookstoreService, loadBooks } = this.props;
-    loadBooks(bookstoreService.getBooks());
+    const { bookstoreService, 
+      uploadBooks, resetBooks, errorBooks } = this.props;
+    resetBooks();
+    bookstoreService.getBooks()
+      .then((data) => uploadBooks(data))
+      .catch((error) => errorBooks(error));
   }
 
   render() {
-    const { books } = this.props;
+    const { books, isLoading, error } = this.props;
 
     const elements = books.map(({ id, ...book }) => <li className="col-6" key={id}>
       <BookItem book={book} />
     </li>);
 
-    return <div className="row">
-      <ul className="rs-book-list d-flex flex-wrap">{elements}</ul>
-    </div>
+    if (isLoading) {
+      return <Spinner />
+    } else if (error) {
+      return <ErrorView />
+    } else {
+      return <div className="row">
+        <ul className="rs-book-list d-flex flex-wrap">{elements}</ul>
+      </div>
+    }
   }
 }
 
-const mapStateToProps = ({ books }) => ({ books });
+const mapStateToProps = ({ books, isLoading, error }) => {
+  return { books, isLoading, error };
+}
 // 1.
-// const action = { type: 'BOOKS_LOADED', payload: newBooks };
-// const mapDispatchToProps = (dispatch) => ({ loadBooks: (newBooks) => dispatch(action) });
+// const action = { type: 'UPLOAD_BOOKS', payload: newBooks };
+// const mapDispatchToProps = (dispatch) => ({ uploadBooks: (newBooks) => dispatch(action) });
 
 // 2.
-// import { loadBooks } from '../../actions';
-// const mapDispatchToProps = (dispatch) => ({ loadBooks: (newBooks) => dispatch(loadBooks(newBooks)) });
+// import { uploadBooks } from '../../actions';
+// const mapDispatchToProps = (dispatch) => ({ uploadBooks: (newBooks) => dispatch(uploadBooks(newBooks)) });
 
 // 3.
-// import { loadBooks } from '../../actions';
+// import { uploadBooks } from '../../actions';
 // import { bindActionCreators } from 'redux';
-// const mapDispatchToProps = (dispatch) => bindActionCreators({ loadBooks }, dispatch);
+// const mapDispatchToProps = (dispatch) => bindActionCreators({ uploadBooks }, dispatch);
 
-const mapDispatchToProps = { loadBooks };
+const mapDispatchToProps = { uploadBooks, resetBooks, errorBooks };
 
 
 export default composeHoc(

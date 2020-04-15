@@ -1,3 +1,5 @@
-const loadBooks = (newBooks) => ({ type: 'BOOKS_LOADED', payload: newBooks });
+const uploadBooks = (newBooks) => ({ type: 'UPLOAD_BOOKS', payload: newBooks });
+const resetBooks = () => ({ type: 'RESET_BOOKS' });
+const errorBooks = (error) => ({ type: 'ERROR_BOOKS', error: error });
 
-export { loadBooks };
+export { uploadBooks, resetBooks, errorBooks };

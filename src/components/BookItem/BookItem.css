@@ -12,14 +12,17 @@
 }
 
 .rs-book-item__title {
-  font-size: 1.4rem;
+  /* color: #79bf00; */
+  color: #18BC9C;
+  font-size: 1.6rem;
 }
 
 .rs-book-item__author {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .rs-book-item__price {
-  color: crimson;
+  /* color: crimson; */
+  color: #E74C3D;
   font-size: 2rem;
 }
