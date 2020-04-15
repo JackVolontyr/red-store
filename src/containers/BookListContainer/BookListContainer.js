@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchBooks } from '../../actions';
+import { addToCart, fetchBooks } from '../../actions';
 
 import React, { Component } from 'react';
 import BookList from '../../components/BookList';
@@ -13,19 +13,19 @@ class BookListContainer extends Component {
   componentDidMount() { this.props.fetchBooks(); }
 
   render() {
-    const { books, isLoading, error } = this.props;
+    const { books, isLoading, error, addToCart } = this.props;
 
     if (isLoading) {
       return <Spinner />
     } else if (error) {
       return <ErrorView />
     } else {
-      return <BookList books={books} />
+      return <BookList books={books} addToCart={addToCart} />
     }
   }
 }
 
-const mapStateToProps = ({ books, isLoading, error }) => ({ books, isLoading, error })
+const mapStateToProps = ({ books, isLoading, error }) => ({ books, isLoading, error });
 
 // 1.
 // const action = { type: 'UPLOAD_BOOKS', payload: newBooks };
@@ -45,8 +45,9 @@ const mapStateToProps = ({ books, isLoading, error }) => ({ books, isLoading, er
 
 // 5.
 const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
-  fetchBooks: fetchBooks(dispatch, bookstoreService)
-})
+  fetchBooks: fetchBooks(dispatch, bookstoreService),
+  addToCart: (bookId) => dispatch(addToCart(bookId))
+});
 
 export default composeHoc(
   connectHoc(),

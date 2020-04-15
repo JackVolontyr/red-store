@@ -1,0 +1,10 @@
+.rs-cart-item__actions {
+  padding: 5px 10px !important;
+}
+
+.rs-cart-item__actions button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-left: 5px;
+}
