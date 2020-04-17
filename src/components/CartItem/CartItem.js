@@ -3,13 +3,14 @@ import './CartItem.css';
 import { Fragment } from 'react';
 
 const CartItem = ({ 
-  cartItem: { id, title, price, currency, count, total },
+  cartItem: { id, title, price, currency, count, quantity, total },
   index, decrease, increase, remove 
 }) => <Fragment>
   <th scope="row">{++index}</th>
   <td>{title}</td>
   <td>{currency}{price}</td>
   <td>{count}</td>
+  <td>{quantity}</td>
   <td className="rs-cart-item__actions">
     <button onClick={() => decrease(id)} className="btn btn-outline-warning"><i className="fa fa-minus-circle" /></button>
     <button onClick={() => increase(id)} className="btn btn-outline-success"><i className="fa fa-plus-circle" /></button>

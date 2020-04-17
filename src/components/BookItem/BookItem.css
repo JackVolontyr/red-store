@@ -26,3 +26,10 @@
   color: #E74C3D;
   font-size: 2rem;
 }
+
+.rs-book-item__info--out-of-stock {
+  color: #F39C12;
+  font-size: 1.6rem;
+  margin-top: auto;
+  margin-bottom: 4px;
+}

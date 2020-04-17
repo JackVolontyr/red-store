@@ -9,7 +9,7 @@ import { composeHoc, connectHoc } from '../../components/Hoc';
 
 
 class BookListContainer extends Component {
-  
+
   componentDidMount() { this.props.fetchBooks(); }
 
   render() {
@@ -25,7 +25,7 @@ class BookListContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ books, isLoading, error }) => ({ books, isLoading, error });
+const mapStateToProps = ({ booksState: { books, isLoading, error } }) => ({ books, isLoading, error });
 
 // 1.
 // const action = { type: 'UPLOAD_BOOKS', payload: newBooks };
