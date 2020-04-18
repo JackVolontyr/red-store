@@ -6,6 +6,7 @@ import BookList from '../../components/BookList';
 import Spinner from '../../components/Spinner';
 import ErrorView from '../../components/ErrorView';
 import { composeHoc, connectHoc } from '../../components/Hoc';
+import { bindActionCreators } from 'redux';
 
 
 class BookListContainer extends Component {
@@ -44,10 +45,24 @@ const mapStateToProps = ({ booksState: { books, isLoading, error } }) => ({ book
 // const mapDispatchToProps = { uploadBooks, resetBooks, errorBooks };
 
 // 5.
-const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
-  fetchBooks: fetchBooks(dispatch, bookstoreService),
-  addToCart: (bookId) => dispatch(addToCart(bookId))
-});
+// const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
+//   fetchBooks: fetchBooks(dispatch, bookstoreService),
+//   addToCart: (bookId) => dispatch(addToCart(bookId))
+// });
+
+// 6.
+// const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
+//   fetchBooks: () => dispatch(fetchBooks(bookstoreService)()),
+//   addToCart: (bookId) => dispatch(addToCart(bookId))
+// });
+
+// 7.
+const mapDispatchToProps = (dispatch, { bookstoreService }) => {
+  return bindActionCreators({
+    fetchBooks: fetchBooks(bookstoreService),
+    addToCart: addToCart
+  }, dispatch);
+};
 
 export default composeHoc(
   connectHoc(),

@@ -8,7 +8,14 @@ const decreaseItemCart = (bookId) => ({ type: 'DECREASE_ITEM_CART', bookId });
 const increaseItemCart = (bookId) => ({ type: 'INCREASE_ITEM_CART', bookId });
 const removeItemCart = (bookId) => ({ type: 'REMOVE_ITEM_CART', bookId });
 
-const fetchBooks = (dispatch, bookstoreService) => () => {
+// const fetchBooks = (dispatch, bookstoreService) => () => {
+//   dispatch(resetBooks());
+//   bookstoreService.getBooks()
+//     .then((data) => dispatch(uploadBooks(data)))
+//     .catch((error) => dispatch(errorBooks(error)));
+// }
+
+const fetchBooks = (bookstoreService) => () => (dispatch) => {
   dispatch(resetBooks());
   bookstoreService.getBooks()
     .then((data) => dispatch(uploadBooks(data)))
