@@ -6,7 +6,7 @@ import Header from '../Header/Header';
 
 const App = () => {
   return <Fragment>
-    <Header numberItems={5} total={80} />
+    <Header />
     <main role="main" className="container">
       <Switch>
         <Route path='/' component={HomePage} exact />
