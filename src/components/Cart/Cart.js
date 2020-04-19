@@ -3,7 +3,11 @@ import CartItem from '../CartItem/CartItem';
 import './Cart.css';
 
 const Cart = (props) => {
-  const { cartItems, currency, total } = props;
+  const { 
+    cartItems, currency, total, 
+    clearCart 
+  } = props;
+  
   const renderRow = (item, index) => <tr key={item.id}>
     <CartItem {...props} cartItem={item} index={index} />
   </tr>
@@ -16,7 +20,7 @@ const Cart = (props) => {
           <th scope="col">Item</th>
           <th scope="col">Price</th>
           <th scope="col">Count</th>
-          <th scope="col">Quantity in store</th>
+          <th scope="col" className="rs-cart__quantity">Quantity in store</th>
           <th scope="col">Action</th>
           <th className="text-right" scope="col">Total</th>
         </tr>
@@ -24,7 +28,10 @@ const Cart = (props) => {
       <tbody>{cartItems.map(renderRow)}</tbody>
     </table>
 
-    <div className="w-100 text-right" style={{ paddingRight: "0.75rem" }}>Total: {currency}{total}</div>
+    <div className="rs-cart__footer d-flex justify-content-between align-items-center w-100">
+      <button onClick={clearCart} className="btn btn-danger">clear cart</button>
+      Total: {currency}{total}
+    </div>
   </div>
 }
 
