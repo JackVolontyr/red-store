@@ -23,8 +23,15 @@ const optionsOf = (array, value, key = 'id') => {
 }
 // const { index, element } = optionsOf(array, id, 'id');
 
+const sortMethods = {
+  toKey: value => value.split('_').join('').toLowerCase(),
+  toParameter: value => value.split('_')[1].toLowerCase(),
+  byQuantity: a => a.quantity > 0,
+  tohigh: (key) => (a, b) => a[key] - b[key],
+  tolow: (key) => (a, b) => b[key] - a[key],
+};
 
 export {
   BY_RATING, IN_STOCK, BY_PRICE, TO_HIGH, TO_LOW,
-  optionsOf,
+  optionsOf, sortMethods,
 }

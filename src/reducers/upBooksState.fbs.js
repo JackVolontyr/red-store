@@ -1,24 +1,37 @@
-import { IN_STOCK, BY_RATING, BY_PRICE, TO_HIGH, TO_LOW } from '../utils';
+import { IN_STOCK, BY_RATING, BY_PRICE, TO_HIGH, TO_LOW, sortMethods } from '../utils';
 
-const byQuantity = a => a.quantity > 0;
-const toName = value => value.split('_').join('').toLowerCase();
+const { toKey, toParameter, byQuantity } = sortMethods;
 
 const changeValue = (value, key, books, cacheFilters) => {
   value = value === false ? TO_LOW : (value === TO_LOW ? TO_HIGH : false);
-
-  const methods = {
-    tohigh: (key) => (a, b) => a[key] - b[key],
-    tolow: (key) => (a, b) => b[key] - a[key],
-  };
-
   return value ?
-    [value, books.sort(methods[toName(value)](key))] :
+    [value, books.sort(sortMethods[toKey(value)](key))] :
     [value, [...cacheFilters]];
 }
 
-const inStockData = (value, books, cache) => {
-  if (value) books = books.filter(byQuantity);
-  return value ? [[...books], [...books]] : [[...cache], [...cache]];
+const filteredBooks = (key, value, books) => books.sort(
+  sortMethods[toKey(value)](toParameter(key))
+);
+
+const inStockData = (value, books, cache, filters) => {
+  // return value ? [[...books], [...books]] : [[...cache], [...cache]];
+  if (value) {
+    books = books.filter(byQuantity);
+  } else {
+    Object.entries(filters).forEach(
+      // { IN_STOCK: false, BY_RATING: false, BY_PRICE: false }
+      // 
+      ([k, v]) => {
+        if ((k === BY_RATING || k === BY_PRICE) && v) {
+          books = filteredBooks(k, v, cache);
+        } else {
+          books = cache;
+        }
+      }
+    )
+  }
+
+  return [[...books], [...books]];
 }
 
 const filteredBooksState = (filter, booksState) => {
@@ -30,7 +43,7 @@ const filteredBooksState = (filter, booksState) => {
   switch (filter) {
     case IN_STOCK:
       value = value ? false : true;
-      [books, cacheFilters] = inStockData(value, books, cache);
+      [books, cacheFilters] = inStockData(value, books, cache, filters);
       return { ...booksState, filters: { ...filters, IN_STOCK: value }, books, cacheFilters };
 
     case BY_RATING:
