@@ -1,29 +1,29 @@
 export default class BookstoreService {
   _data = [{
     id: 1,
-    title: 'The Old Man and the Sea',
+    title: '1) The Old Man and the Sea',
     author: 'Ernest Hemmingway',
     price: 4,
     currency: '$',
-    quantity: 0,
+    quantity: 1,
     cover: 'https://book-ye.com.ua/upload/iblock/277/99c35223_35ba_11e8_80f0_000c29ae1566_ee9e5d79_35ba_11e8_80f0_000c29ae1566.jpg',
     isInCart: false,
-    rating: 2,
+    rating: 3,
   }, {
     id: 2,
-    title: 'Treasure Island',
+    title: '2) Treasure Island price - 5',
     author: 'Robert Louis Stevenson',
     price: 5,
     currency: '$',
-    quantity: 1,
+    quantity: 0,
     cover: 'https://images-na.ssl-images-amazon.com/images/I/910CGpvNnkL.jpg',
     isInCart: false,
     rating: 1,
   }, {
     id: 3,
-    title: 'Robinson Crusoe',
+    title: '3) Robinson Crusoe',
     author: 'Daniel Defoe',
-    price: 3,
+    price: 2,
     currency: '$',
     quantity: 5,
     cover: 'https://images-na.ssl-images-amazon.com/images/I/414p0x7KV%2BL.jpg',
@@ -32,7 +32,7 @@ export default class BookstoreService {
 
   }, {
     id: 4,
-    title: 'The Sea Wolf',
+    title: '4) The Sea Wolf',
     author: 'Jack London',
     price: 3,
     currency: '$',
@@ -43,14 +43,14 @@ export default class BookstoreService {
 
   }, {
     id: 5,
-    title: 'Moby-Dick, or The Whale',
+    title: '5) Moby-Dick, or The Whale',
     author: 'Herman Melville',
     price: 1,
     currency: '$',
     quantity: 2,
     cover: 'https://www.booklya.ua/content/upload/product/183k/183841/800x800/560616/moby-dick.jpg',
     isInCart: false,
-    rating: 3,
+    rating: 4,
 
   }];
 

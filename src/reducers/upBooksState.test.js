@@ -6,6 +6,7 @@ import BookstoreService from '../services/BookstoreService';
 const INIT_STATE = {
   booksState: {
     cache: [],
+    cacheFilters: [],
     books: [],
     isLoading: true,
     error: null,
@@ -14,36 +15,57 @@ const INIT_STATE = {
   cartState: {},
 };
 
-let state, books;
-
 const newBooks = new BookstoreService()._data;
 
 const touchState = (state, INIT_STATE, action) => {
   const touchedState = { ...state, booksState: upBooksState(INIT_STATE, action) };
-  return [touchedState, touchedState.booksState.books];
+  return [
+    {...touchedState}, 
+    [...touchedState.booksState.books], 
+    [...touchedState.booksState.cache], 
+    [...touchedState.booksState.cacheFilters]
+  ];
 };
 
+const checkAll = (array, checkArray, key) => array.forEach(
+  (item, index) => expect(item[key]).toBe(checkArray[index][key])
+);
+
 // UPLOAD
-it('count of books in new state should be equal to two', () => {
-  const action = uploadBooks(newBooks);
-  [, books] = touchState(state, INIT_STATE, action);
+it('uploadBooks works correct', () => {
+  let [, books, cache, cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
   expect(books).toHaveLength(5);
+  expect(cache).toHaveLength(5);
+  expect(cacheFilters).toHaveLength(5);
+
+  checkAll(books, cache, 'title');
+  checkAll(cache, cacheFilters, 'title');
 });
 
 describe("books filters", () => {
-  [state, books] = touchState(state, INIT_STATE, uploadBooks(newBooks));
 
-  it('set and unset `IN_STOCK` filter works correct', () => {
+  it('set and unset `IN_STOCK` filter works correct and cacheFilters is updated', () => {
+    let [state, books, cache, cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    const oldCashe = cache;
+
     const action = toggleFilter(IN_STOCK);
 
-    [state, books] = touchState(state, state, action);
+    [state, books, cache, cacheFilters] = touchState(state, state, action);
     expect(books).toHaveLength(4);
+    expect(cache).toHaveLength(5);
+    expect(cacheFilters).toHaveLength(4);
 
-    [state, books] = touchState(state, state, action);
+    [state, books, cache, cacheFilters] = touchState(state, state, action);
     expect(books).toHaveLength(5);
+    expect(cache).toHaveLength(5);
+    expect(cacheFilters).toHaveLength(5);
+
+    checkAll(cache, oldCashe, 'title');
   });
 
   it('toLow, toHigh, unset `BY_RATING` filter works correct', () => {
+    let [state, books, cache] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
     const action = toggleFilter(BY_RATING);
 
     [state, books] = touchState(state, state, action);
@@ -53,10 +75,12 @@ describe("books filters", () => {
     expect(books[0].rating).toBe(1);
 
     [state, books] = touchState(state, state, action);
-    expect(books).toHaveLength(5);
+    checkAll(books, cache, 'title');
   });
 
   it('toLow, toHigh, unset `BY_PRICE` filter works correct', () => {
+    let [state, books, cache] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
     const action = toggleFilter(BY_PRICE);
 
     [state, books] = touchState(state, state, action);
@@ -66,27 +90,30 @@ describe("books filters", () => {
     expect(books[0].price).toBe(1);
 
     [state, books] = touchState(state, state, action);
-    expect(books).toHaveLength(5);
+    checkAll(books, cache, 'title');
   });
 
   it('setted `IN_STOCK` works correct after unset the `BY_RATING`', () => {
-    let action;
-    action = toggleFilter(IN_STOCK);
-    [state, books] = touchState(state, state, action);
+    let [state, books, , cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = toggleFilter(IN_STOCK);
+    [state, books, , cacheFilters] = touchState(state, state, action);
     expect(books).toHaveLength(4);
 
     action = toggleFilter(BY_RATING);
     [state,] = touchState(state, state, action);
     [state,] = touchState(state, state, action);
     [state, books] = touchState(state, state, action);
-
     expect(books).toHaveLength(4);
+
+    checkAll(books, cacheFilters, 'title');
   });
 
   it('setted `IN_STOCK` works correct after unset the `BY_PRICE`', () => {
-    let action;
-    action = toggleFilter(IN_STOCK);
-    [state, books] = touchState(state, state, action);
+    let [state, books, , cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = toggleFilter(IN_STOCK);
+    [state, books, , cacheFilters] = touchState(state, state, action);
     expect(books).toHaveLength(4);
 
     action = toggleFilter(BY_PRICE);
@@ -94,5 +121,7 @@ describe("books filters", () => {
     [state,] = touchState(state, state, action);
     [state, books] = touchState(state, state, action);
     expect(books).toHaveLength(4);
+
+    checkAll(books, cacheFilters, 'title');
   });
 });
