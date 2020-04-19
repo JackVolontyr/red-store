@@ -124,4 +124,32 @@ describe("books filters", () => {
 
     checkAll(books, cacheFilters, 'title');
   });
+
+  it('unsetting `IN_STOCK` works correct with setted `BY_RATING`', () => {
+    let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = toggleFilter(BY_RATING);
+    [state, books] = touchState(state, state, action);
+    let rightBooks = books;
+    
+    action = toggleFilter(IN_STOCK);
+    [state, books] = touchState(state, state, action);
+    [state, books] = touchState(state, state, action);
+
+    checkAll(books, rightBooks, 'title');
+  });
+
+  it('unsetting `IN_STOCK` works correct with setted `BY_PRICE`', () => {
+    let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = toggleFilter(BY_PRICE);
+    [state, books] = touchState(state, state, action);
+    let rightBooks = books;
+    
+    action = toggleFilter(IN_STOCK);
+    [state, books] = touchState(state, state, action);
+    [state, books] = touchState(state, state, action);
+
+    checkAll(books, rightBooks, 'title');
+  });
 });
