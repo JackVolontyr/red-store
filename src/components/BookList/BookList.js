@@ -20,7 +20,7 @@ const BookList = (props) => {
       <div className="d-flex flex-grow-1">
         {Object.entries(filters).map(([key, value]) => {
           const text = key.toLowerCase().split('_').join(' ');
-          return <FilterButton key={key} isSet={value} text={text} onClick={() => toggleFilter(key)} />
+          return <FilterButton key={key} isSet={value} text={`${text} - ${value}`} onClick={() => toggleFilter(key)} />
         })}
       </div>
     </div>

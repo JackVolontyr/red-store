@@ -1,6 +1,8 @@
 const BY_RATING = 'BY_RATING';
 const IN_STOCK = 'IN_STOCK';
+const BY_PRICE = 'BY_PRICE';
 const TO_HIGH = 'TO_HIGH';
+const TO_LOW = 'TO_LOW';
 
 // `optionsOf` element in `array` with `value`
 const optionsOf = (array, value, key = 'id') => {
@@ -23,6 +25,6 @@ const optionsOf = (array, value, key = 'id') => {
 
 
 export {
-  BY_RATING, IN_STOCK, TO_HIGH,
+  BY_RATING, IN_STOCK, BY_PRICE, TO_HIGH, TO_LOW,
   optionsOf,
 }

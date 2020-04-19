@@ -1,6 +1,5 @@
 const showLoadingBooks = () => 'FETCH_BOOKS_REQUEST';
 const uploadBooks = newBooks => ({ type: 'FETCH_BOOKS_SUCCESS', newBooks });
-// const cachedBooks = newBooks => ({ type: 'CACHED_BOOKS', newBooks });
 const errorBooks = error => ({ type: 'FETCH_BOOKS_FAILURE', error });
 const cachedBooks = () => 'GET_BOOKS_FROM_CACHE';
 
