@@ -4,6 +4,8 @@
 
 .rs-book-item__cover img {
   max-width: 120px;
+  width: 120px;
+  max-height: 180px;
   height: 180px;
 }
 
@@ -12,9 +14,11 @@
 }
 
 .rs-book-item__title {
-  /* color: #79bf00; */
+  margin-top: 7px;
+  margin-bottom: 6px;
   color: #18BC9C;
   font-size: 1.6rem;
+  line-height: .7;
 }
 
 .rs-book-item__author {
@@ -32,4 +36,8 @@
   font-size: 1.6rem;
   margin-top: auto;
   margin-bottom: 4px;
+}
+
+.rs-book-item__rating .checked {
+  color: orange;
 }

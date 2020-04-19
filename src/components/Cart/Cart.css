@@ -1,2 +1,33 @@
-.rs-cart {
+@media (max-width: 768px) {
+  .rs-cart .table th, .table td {
+    padding-left: .2rem;
+    padding-right: .2rem;
+  }
+}
+
+.rs-cart__quantity {
+  font-size: 0;
+}
+
+.rs-cart__quantity:before {
+  content: "Quantity in store";
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 768px) {
+  .rs-cart__quantity:before {
+    content: "Qty";
+  } 
+}
+
+.rs-cart__footer {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .rs-cart__footer {
+    padding-left: .2rem;
+    padding-right: .2rem;
+  } 
 }

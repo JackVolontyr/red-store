@@ -1,10 +1,15 @@
 .rs-cart-item__actions {
-  padding: 5px 10px !important;
+  min-width: 125px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 
 .rs-cart-item__actions button {
   width: 36px;
   height: 36px;
   padding: 0;
-  margin-left: 5px;
+}
+
+.rs-cart-item__actions button:not(:last-child) {
+  margin-right: 5px;
 }
