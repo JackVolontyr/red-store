@@ -15,66 +15,40 @@ const toggleAsAdded = (booksState, id, books, value) => {
 
 const unsetAllAsAdded = books => books.map(book => ({ ...book, isInCart: false }));
 
-const toHigh = (key) => (a, b) => a[key] - b[key];
-const toLow = (key) => (a, b) => b[key] - a[key];
 const byQuantity = a => a.quantity > 0;
+const toName = value => value.split('_').join('').toLowerCase();
+
+const changeValue = (value, key, books, cache) => {
+  value = value === false ? TO_LOW : (value === TO_LOW ? TO_HIGH : false);
+  
+  const methods = {
+    tohigh: (key) => (a, b) => a[key] - b[key],
+    tolow: (key) => (a, b) => b[key] - a[key],
+  };
+
+  return value ? 
+    [value, books.sort(methods[toName(value)](key))]:
+    [value, cache]; 
+}
 
 const filteredBooksState = (filter, booksState) => {
-  const { books, filters, cache } = booksState;
-  const value = filters[filter];
-  let newBooks, valueStock, valueRating, valuePrice;
+  const { filters, cache } = booksState;
+  let { books } = booksState;
+  let value = filters[filter];
 
   switch (filter) {
     case IN_STOCK:
-      valueStock = value ? false : true;
-      newBooks = valueStock ? books.filter(byQuantity) : cache;
-      return { ...booksState, filters: { ...filters, IN_STOCK: valueStock }, books: newBooks };
+      value = value ? false : true;
+      books = value ? books.filter(byQuantity) : cache;
+      return { ...booksState, filters: { ...filters, IN_STOCK: value }, books };
 
     case BY_RATING: 
-      switch (value) {
-        case false:
-          valueRating = TO_LOW;
-          valuePrice = false;
-          newBooks = books.sort(toLow('rating'));
-          break;
-        case TO_LOW:
-          valueRating = TO_HIGH;
-          valuePrice = false;
-          newBooks = books.sort(toHigh('rating')); 
-          break;
-        case TO_HIGH:
-          valueRating = false;
-          valuePrice = false;
-          newBooks = cache;
-          break;
-        default: 
-          newBooks = books; 
-          break;
-      }
-      return { ...booksState, filters: { ...filters, BY_PRICE: valuePrice, BY_RATING: valueRating }, books: newBooks };
+      [value, books] = changeValue(value, 'rating', books, cache);
+      return { ...booksState, filters: { ...filters, BY_PRICE: false, BY_RATING: value }, books };
 
     case BY_PRICE: 
-      switch (value) {
-        case false:
-          valuePrice = TO_LOW;
-          valueRating = false;
-          newBooks = books.sort(toLow('price'));
-          break;
-        case TO_LOW:
-          valuePrice = TO_HIGH;
-          valueRating = false;
-          newBooks = books.sort(toHigh('price')); 
-          break;
-        case TO_HIGH:
-          valuePrice = false;
-          valueRating = false;
-          newBooks = cache;
-          break;
-        default: 
-          newBooks = books; 
-          break;
-      }
-      return { ...booksState, filters: { ...filters, BY_PRICE: valuePrice, BY_RATING: valueRating }, books: newBooks };
+      [value, books] = changeValue(value, 'price', books, cache);
+      return { ...booksState, filters: { ...filters, BY_PRICE: value, BY_RATING: false }, books };
 
     default: return booksState;
   }
