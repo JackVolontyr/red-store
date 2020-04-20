@@ -18,7 +18,7 @@ const BookItem = ({
     <div className="rs-book-item__cover">
       <img src={cover} alt={title} />
     </div>
-    <div className="rs-book-item__info d-flex flex-column">
+    <div className="rs-book-item__info d-flex flex-column flex-grow-1">
       <Rating rating={rating} />
       <div className="rs-book-item__title rs-font">{title.toLowerCase()}</div>
       <div className="rs-book-item__author">{author}</div>

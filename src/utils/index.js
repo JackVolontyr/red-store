@@ -24,6 +24,7 @@ const optionsOf = (array, value, key = 'id') => {
 // const { index, element } = optionsOf(array, id, 'id');
 
 const sortMethods = {
+  toText: value => value.split('_').join(' ').toLowerCase(),
   toKey: value => value.split('_').join('').toLowerCase(),
   toParameter: value => value.split('_')[1].toLowerCase(),
   byQuantity: a => a.quantity > 0,

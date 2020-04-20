@@ -13,24 +13,21 @@ const filteredBooks = (key, value, books) => books.sort(
   sortMethods[toKey(value)](toParameter(key))
 );
 
-const inStockData = (value, books, cache, filters) => {
-  // return value ? [[...books], [...books]] : [[...cache], [...cache]];
-  if (value) {
-    books = books.filter(byQuantity);
-  } else {
-    Object.entries(filters).forEach(
-      // { IN_STOCK: false, BY_RATING: false, BY_PRICE: false }
-      // 
-      ([k, v]) => {
-        if ((k === BY_RATING || k === BY_PRICE) && v) {
-          books = filteredBooks(k, v, cache);
-        } else {
-          books = cache;
-        }
-      }
-    )
-  }
+const isRightFilter = (key, value) => (key === BY_RATING || key === BY_PRICE) && value;
 
+const byKeyValue = (object, callback) => Object.entries(object).filter(
+  ([key, value]) => isRightFilter(key, value)
+);
+
+const getFilteredBooks = (filters, cache) => {
+  const [filter] = byKeyValue(filters);
+  return filter ? filteredBooks(filter[0], filter[1], cache) : cache;
+}
+
+const inStockData = (value, books, cache, filters) => {
+  books = value ? 
+    books.filter(byQuantity) :
+    getFilteredBooks(filters, cache);
   return [[...books], [...books]];
 }
 

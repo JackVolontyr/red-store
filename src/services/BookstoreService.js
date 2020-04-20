@@ -1,7 +1,8 @@
 export default class BookstoreService {
   _data = [{
     id: 1,
-    title: '1) The Old Man and the Sea',
+    title: 'The Old Man and the Sea',
+    // title: '1) The Old Man and the Sea',
     author: 'Ernest Hemmingway',
     price: 4,
     currency: '$',
@@ -11,7 +12,8 @@ export default class BookstoreService {
     rating: 3,
   }, {
     id: 2,
-    title: '2) Treasure Island price - 5',
+    title: 'Treasure Island',
+    // title: '2) Treasure Island price - 5',
     author: 'Robert Louis Stevenson',
     price: 5,
     currency: '$',
@@ -21,7 +23,8 @@ export default class BookstoreService {
     rating: 1,
   }, {
     id: 3,
-    title: '3) Robinson Crusoe',
+    title: 'Robinson Crusoe',
+    // title: '3) Robinson Crusoe',
     author: 'Daniel Defoe',
     price: 2,
     currency: '$',
@@ -32,7 +35,8 @@ export default class BookstoreService {
 
   }, {
     id: 4,
-    title: '4) The Sea Wolf',
+    title: 'The Sea Wolf',
+    // title: '4) The Sea Wolf',
     author: 'Jack London',
     price: 3,
     currency: '$',
@@ -43,7 +47,8 @@ export default class BookstoreService {
 
   }, {
     id: 5,
-    title: '5) Moby-Dick, or The Whale',
+    title: 'Moby-Dick, or The Whale',
+    // title: '5) Moby-Dick, or The Whale',
     author: 'Herman Melville',
     price: 1,
     currency: '$',

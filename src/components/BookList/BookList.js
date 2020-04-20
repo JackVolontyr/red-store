@@ -1,26 +1,45 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import BookItem from '../BookItem';
 
 import './BookList.css';
+import { IN_STOCK, sortMethods } from '../../utils';
 
-const FilterButton = ({ isSet, text, onClick }) =>
+const { toText } = sortMethods;
+
+const FilterButton = ({ filter, isSet, text, onClick }) =>
   <button
     onClick={onClick}
     type="button"
-    className={`ml-2 flex-grow-1 btn btn-sm ${isSet ? 'btn-success' : 'btn-secondary'}`}
+    className={`mb-1 mb-sm-0 ml-0 ml-sm-2 flex-grow-1 btn btn-sm ${isSet ? 'btn-success' : 'btn-secondary'}`}
   >
     {text}
+    {(filter !== IN_STOCK) ? 
+      <Fragment>
+        :&nbsp;
+        <span className={`rs-to-low ${isSet}`}>to low</span>
+        &nbsp;/&nbsp;
+        <span className={`rs-to-high ${isSet}`}>to high</span>
+      </Fragment> : ''
+    }
   </button>
 
 const BookList = (props) => {
   const { books, filters, toggleFilter, addBookToCart } = props;
   return <div className="row">
-    <div className="rs-book-list__sort mb-2 w-100 d-flex">
-      <h4 className="m-0">Sort by:</h4>
-      <div className="d-flex flex-grow-1">
+    <div className="rs-p-after mb-2 w-100">
+      <input className="form-control" type="text" placeholder="search by title and author" />
+    </div>
+
+    <div className="rs-book-list__sort rs-p-after mb-2 w-100 d-flex">
+      <h4 className="m-0 d-none d-sm-block">Sort by:</h4>
+      <div className="d-flex flex-column flex-sm-row flex-grow-1">
         {Object.entries(filters).map(([key, value]) => {
-          const text = key.toLowerCase().split('_').join(' ');
-          return <FilterButton key={key} isSet={value} text={`${text} - ${value}`} onClick={() => toggleFilter(key)} />
+          return <FilterButton 
+            key={key} 
+            filter={key}
+            isSet={value} 
+            text={toText(key)} 
+            onClick={() => toggleFilter(key)} />
         })}
       </div>
     </div>

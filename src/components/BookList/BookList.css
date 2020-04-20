@@ -5,6 +5,12 @@
   margin: 0 -5px;
 }
 
+.rs-to-low.TO_LOW,
+.rs-to-high.TO_HIGH {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .rs-book-list {
     width: auto;

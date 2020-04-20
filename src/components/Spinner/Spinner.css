@@ -21,7 +21,7 @@
   left: 8.5px;
   border-radius: 50%;
   border: 3px solid #000;
-  border-color: #182731 transparent #182731 transparent;
+  border-color: #18BC9C transparent #18BC9C transparent;
   animation: rs-spinner__animation 1s linear infinite;
 }
 
@@ -33,7 +33,7 @@
   animation: rs-spinner__animation 1s linear infinite reverse;
 }
 .rs-spinner__animation > div:nth-child(2) {
-  border-color: transparent #a7d4ec transparent #a7d4ec
+  border-color: transparent #F39C12 transparent #F39C12
 }
 .rs-spinner__animation > div:nth-child(3) { border-color: transparent }
 .rs-spinner__animation > div:nth-child(3) div {
@@ -50,14 +50,14 @@
   height: 3px;
   top: -3px;
   left: 37px;
-  background: #182731;
+  background: #18BC9C;
   border-radius: 50%;
-  box-shadow: 0 80px 0 0 #182731;
+  box-shadow: 0 80px 0 0 #18BC9C;
 }
 .rs-spinner__animation > div:nth-child(3) div:after {
   left: -3px;
   top: 37px;
-  box-shadow: 80px 0 0 0 #182731;
+  box-shadow: 80px 0 0 0 #18BC9C;
 }
 
 .rs-spinner__animation > div:nth-child(4) { border-color: transparent; }
@@ -75,14 +75,14 @@
   height: 3px;
   top: -3px;
   left: 33px;
-  background: #a7d4ec;
+  background: #F39C12;
   border-radius: 50%;
-  box-shadow: 0 72px 0 0 #a7d4ec;
+  box-shadow: 0 72px 0 0 #F39C12;
 }
 .rs-spinner__animation > div:nth-child(4) div:after {
   left: -3px;
   top: 33px;
-  box-shadow: 72px 0 0 0 #a7d4ec;
+  box-shadow: 72px 0 0 0 #F39C12;
 }
 .rs-spinner__animation {
   width: 100%;
