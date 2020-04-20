@@ -24,10 +24,19 @@ const FilterButton = ({ filter, isSet, text, onClick }) =>
   </button>
 
 const BookList = (props) => {
-  const { books, filters, toggleFilter, addBookToCart } = props;
+  const { 
+    books, filters, searchValue, 
+    searchBy, toggleFilter, addBookToCart 
+  } = props;
+  
   return <div className="row">
     <div className="rs-p-after mb-2 w-100">
-      <input className="form-control" type="text" placeholder="search by title and author" />
+      <input
+        onChange={(e) => searchBy(e.target.value)} 
+        value={searchValue}
+        className="form-control" 
+        type="text" 
+        placeholder="search by title and author" />
     </div>
 
     <div className="rs-book-list__sort rs-p-after mb-2 w-100 d-flex">

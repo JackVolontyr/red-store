@@ -1,5 +1,5 @@
 import upBooksState from './upBooksState';
-import { uploadBooks, toggleFilter } from '../actions';
+import { uploadBooks, toggleFilter, searchBy } from '../actions';
 import { IN_STOCK, BY_RATING, BY_PRICE } from '../utils';
 import BookstoreService from '../services/BookstoreService';
 
@@ -43,8 +43,7 @@ it('uploadBooks works correct', () => {
 });
 
 describe("books filters", () => {
-
-  it('set and unset `IN_STOCK` filter works correct and cacheFilters is updated', () => {
+  it('set and unset IN_STOCK filter works correct and cacheFilters is updated', () => {
     let [state, books, cache, cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     const oldCashe = cache;
 
@@ -63,7 +62,7 @@ describe("books filters", () => {
     checkAll(cache, oldCashe, 'title');
   });
 
-  it('toLow, toHigh, unset `BY_RATING` filter works correct', () => {
+  it('toLow, toHigh, unset BY_RATING filter works correct', () => {
     let [state, books, cache] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     
     const action = toggleFilter(BY_RATING);
@@ -78,7 +77,7 @@ describe("books filters", () => {
     checkAll(books, cache, 'title');
   });
 
-  it('toLow, toHigh, unset `BY_PRICE` filter works correct', () => {
+  it('toLow, toHigh, unset BY_PRICE filter works correct', () => {
     let [state, books, cache] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     
     const action = toggleFilter(BY_PRICE);
@@ -93,7 +92,7 @@ describe("books filters", () => {
     checkAll(books, cache, 'title');
   });
 
-  it('setted `IN_STOCK` works correct after unset the `BY_RATING`', () => {
+  it('setted IN_STOCK works correct after unset the BY_RATING', () => {
     let [state, books, , cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     
     let action = toggleFilter(IN_STOCK);
@@ -109,7 +108,7 @@ describe("books filters", () => {
     checkAll(books, cacheFilters, 'title');
   });
 
-  it('setted `IN_STOCK` works correct after unset the `BY_PRICE`', () => {
+  it('setted IN_STOCK works correct after unset the BY_PRICE', () => {
     let [state, books, , cacheFilters] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     
     let action = toggleFilter(IN_STOCK);
@@ -125,7 +124,7 @@ describe("books filters", () => {
     checkAll(books, cacheFilters, 'title');
   });
 
-  it('unsetting `IN_STOCK` works correct with setted `BY_RATING`', () => {
+  it('unsetting IN_STOCK works correct with setted BY_RATING', () => {
     let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     
     let action = toggleFilter(BY_RATING);
@@ -139,7 +138,7 @@ describe("books filters", () => {
     checkAll(books, rightBooks, 'title');
   });
 
-  it('unsetting `IN_STOCK` works correct with setted `BY_PRICE`', () => {
+  it('unsetting IN_STOCK works correct with setted BY_PRICE', () => {
     let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
     
     let action = toggleFilter(BY_PRICE);
@@ -151,5 +150,68 @@ describe("books filters", () => {
     [state, books] = touchState(state, state, action);
 
     checkAll(books, rightBooks, 'title');
+  });
+
+  it('search works correct', () => {
+    let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = searchBy('s');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(4);
+    
+    action = searchBy('se');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(2);
+
+    action = searchBy('e');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(5);
+
+    action = searchBy('er');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(3);
+  });
+
+  it('search works correct with IN_STOCK', () => {
+    let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = searchBy('ea');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(3);
+    
+    action = toggleFilter(IN_STOCK);
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(2);
+    
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(3);
+  });
+
+  it('search works correct with BY_RATING', () => {
+    let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = searchBy('sea');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(2);
+    
+    action = toggleFilter(BY_RATING);
+    [state] = touchState(state, state, action);
+    [state] = touchState(state, state, action);
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(2);
+  });
+
+  it('search works correct with BY_PRICE', () => {
+    let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
+    
+    let action = searchBy('sea');
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(2);
+    
+    action = toggleFilter(BY_PRICE);
+    [state] = touchState(state, state, action);
+    [state] = touchState(state, state, action);
+    [state, books] = touchState(state, state, action);
+    expect(books).toHaveLength(2);
   });
 });

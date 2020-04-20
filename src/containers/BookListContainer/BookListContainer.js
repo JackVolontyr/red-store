@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleFilter, addBookToCart, getBooksFromCache, fetchBooks } from '../../actions';
+import { searchBy, toggleFilter, addBookToCart, getBooksFromCache, fetchBooks } from '../../actions';
 
 import React, { Component } from 'react';
 import BookList from '../../components/BookList';
@@ -69,9 +69,10 @@ class BookListContainer extends Component {
 const mapDispatchToProps = (dispatch, { bookstoreService }) => {
   return bindActionCreators({
     fetchBooks: fetchBooks(bookstoreService),
-    getBooksFromCache: getBooksFromCache,
-    addBookToCart: addBookToCart,
-    toggleFilter: toggleFilter,
+    getBooksFromCache,
+    addBookToCart,
+    toggleFilter,
+    searchBy,
   }, dispatch);
 };
 

@@ -4,6 +4,7 @@ const errorBooks = error => ({ type: 'FETCH_BOOKS_FAILURE', error });
 const cachedBooks = () => 'GET_BOOKS_FROM_CACHE';
 
 const toggleFilter = filter => ({ type: 'TOGGLE_FILTER', filter });
+const searchBy = request => ({ type: 'SEARCH_BY', request });
 
 const setAdded = bookId => ({ type: 'SET_BOOK_AS_ADDED_TO_CART', bookId });
 const unsetAdded = bookId => ({ type: 'UNSET_BOOK_AS_ADDED_TO_CART', bookId });
@@ -58,7 +59,8 @@ export {
   uploadBooks,
   
   fetchBooks, getBooksFromCache,
-  toggleFilter, addBookToCart, removeBookFromCart,
+  toggleFilter, searchBy, 
+  addBookToCart, removeBookFromCart,
   decreaseItem, increaseItem,
   clearCart
 };
