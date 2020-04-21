@@ -70,7 +70,7 @@ const filterBooks = booksState => {
   let { cache, filters } = booksState;
   let books = Object.entries(filters).reduce((acc, curr) => {
     const [key, value] = curr;
-    return !!value ? filterBy(acc, key, value) : acc;
+    return !!value ? filterBy(acc, key, value) : [...acc];
   }, cache);
   return [...books];
 }
