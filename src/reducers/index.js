@@ -1,4 +1,4 @@
-import upBooksState from './upBooksState';
+import { upBooksState } from './upBooksState';
 import upCartState from './upCartState';
 
 const reducer = (state, action) => {

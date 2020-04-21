@@ -1,45 +1,20 @@
-import filteredBooksState from './upBooksState.fbs';
 import toggleAsAdded from './upBooksState.taa';
+import filtered from './upBooksState.filtered';
+import { IN_STOCK, BY_RATING, BY_PRICE, SEARCH_BY } from '../utils';
 
-const arrayToLowerCase = (...array) => array.map(item => item.toLowerCase());
-const isSub = (string, sub) => string.indexOf(sub) > -1
-const isNothing = string => string === ''
-
-const searchByRequest = (request, booksState) => {
-  let { books, cacheFilters, searchValue, filters } = booksState;
-  let specialCharacter = (request[request.length - 1] === ' ') ? ' ' : '';
-
-  const newBooks = isNothing(request) ? 
-    cacheFilters :
-    cacheFilters.filter(book => {
-      let { title, author } = book;
-      [title, author, request] = arrayToLowerCase(title, author, request.trim())
-
-      if (isSub(title, request) || isSub(author, request)) {
-        return book;
-      }
-    });
-
-  return { 
-    ...booksState,
-    filters: { ...filters, BY_RATING: false, BY_PRICE: false },
-    searchValue: request + specialCharacter, 
-    books: [...newBooks] 
-  };
-}
+const INIT_FILTERS = { IN_STOCK: false, BY_RATING: false, BY_PRICE: false, SEARCH_BY: '' };
+const INIT_BOOKS_STATE = {
+  cache: [],
+  books: [],
+  isLoading: true,
+  error: null,
+  filters: { ...INIT_FILTERS },
+};
 
 const unsetAllAsAdded = books => books.map(book => ({ ...book, isInCart: false }));
 
 const upBooksState = (state, action) => {
-  if (!state) return {
-    cache: [],
-    cacheFilters: [],
-    books: [],
-    searchValue: '',
-    isLoading: true,
-    error: null,
-    filters: { IN_STOCK: false, BY_RATING: false, BY_PRICE: false },
-  }
+  if (!state) return { ...INIT_BOOKS_STATE };
 
   // action.params are different for every action 
   const {
@@ -63,13 +38,13 @@ const upBooksState = (state, action) => {
     // error
     case 'FETCH_BOOKS_FAILURE': return { ...booksState, isLoading: false, error };
     // 
-    case 'GET_BOOKS_FROM_CACHE': return {
-      ...booksState, books: [...cache], isLoading: false, filters: { IN_STOCK: false, BY_RATING: false, BY_PRICE: false }
-    };
+    case 'GET_BOOKS_FROM_CACHE': return { ...booksState, books: [...cache], isLoading: false, filters: { ...INIT_FILTERS } };
     // filter
-    case 'TOGGLE_FILTER': return filteredBooksState(filter, booksState);
+    // case 'TOGGLE_FILTER': return filteredBooksState(filter, booksState);
+    case 'TOGGLE_FILTER': return filtered(booksState, filter, false);
     // request
-    case 'SEARCH_BY': return searchByRequest(request, booksState);
+    // case 'SEARCH_BY': return searchByRequest(request, booksState);
+    case 'SEARCH_BY': return filtered(booksState, SEARCH_BY, request);
 
     case 'SET_BOOK_AS_ADDED_TO_CART': return toggleAsAdded(booksState, id, books, true);
     case 'UNSET_BOOK_AS_ADDED_TO_CART': return toggleAsAdded(booksState, id, books, false);
@@ -79,4 +54,4 @@ const upBooksState = (state, action) => {
   }
 }
 
-export default upBooksState;
+export { upBooksState, INIT_BOOKS_STATE };

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import BookItem from '../BookItem';
 
 import './BookList.css';
-import { IN_STOCK, sortMethods } from '../../utils';
+import { IN_STOCK, sortMethods, SEARCH_BY } from '../../utils';
 
 const { toText } = sortMethods;
 
@@ -24,8 +24,9 @@ const FilterButton = ({ filter, isSet, text, onClick }) =>
   </button>
 
 const BookList = (props) => {
+  
   const { 
-    books, filters, searchValue, 
+    books, filters, 
     searchBy, toggleFilter, addBookToCart 
   } = props;
   
@@ -33,7 +34,7 @@ const BookList = (props) => {
     <div className="rs-p-after mb-2 w-100">
       <input
         onChange={(e) => searchBy(e.target.value)} 
-        value={searchValue}
+        value={filters[SEARCH_BY]}
         className="form-control" 
         type="text" 
         placeholder="search by title and author" />
@@ -42,14 +43,15 @@ const BookList = (props) => {
     <div className="rs-book-list__sort rs-p-after mb-2 w-100 d-flex">
       <h4 className="m-0 d-none d-sm-block">Sort by:</h4>
       <div className="d-flex flex-column flex-sm-row flex-grow-1">
-        {Object.entries(filters).map(([key, value]) => {
-          return <FilterButton 
+        {Object.entries(filters).map(([key, value]) => key === SEARCH_BY ? 
+          null :
+          <FilterButton 
             key={key} 
             filter={key}
             isSet={value} 
             text={toText(key)} 
             onClick={() => toggleFilter(key)} />
-        })}
+        )}
       </div>
     </div>
 
