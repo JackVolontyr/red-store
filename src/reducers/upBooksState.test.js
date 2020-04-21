@@ -34,7 +34,7 @@ it('uploadBooks works correct', () => {
 describe("books filters", () => {
   it('set and unset IN_STOCK filter works correct', () => {
     let [state, books, cache] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
-    const oldCashe = cache;
+    const oldCashe = [...cache];
 
     const action = toggleFilter(IN_STOCK);
 
@@ -131,7 +131,7 @@ describe("books filters", () => {
 
   it('XXXXXXXXXXX unsetting IN_STOCK works correct with setted BY_PRICE', () => {
     return false;
-    
+
     // let [state, books] = touchState(INIT_STATE, INIT_STATE, uploadBooks(newBooks));
 
     // let action = toggleFilter(BY_PRICE);

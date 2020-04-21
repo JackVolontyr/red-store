@@ -24,8 +24,12 @@ const setFilter_button = (booksState, filter) => {
   return { ...booksState, filters };
 }
 
+const isEmpty = string => string[string.length - 1] === ' ';
+
 const setFilter_search = (booksState, request) => {
   let { filters } = booksState;
+  const specialCharacter = isEmpty(request) ? ' ' : '';
+  request = request.trim() + specialCharacter;
   filters = { ...filters, BY_RATING: false, BY_PRICE: false, SEARCH_BY: request };
   return { ...booksState, filters };
 }
@@ -40,44 +44,46 @@ const setFilter = (booksState, filter, request) => {
 const isAllFalse = array => !array.find(item => !!item);
 const prepareSearchParam = param => param === '' ? false : true;
 const isSearchBy = type => type === 'searchby';
+const isSwitch = type => type === 'byrating' || type === 'byprice';
 
 const filterBy = (array, type, param) => {
   const ms = sortMethods;
   const { toKey, toParameter } = ms;
 
+  let request = param;
   let argument = toParameter(type);
+
   type = toKey(type);
   param = isSearchBy(type) ? prepareSearchParam(param) : toKey(param);
-  
-  console.log(ms[type]);
-  console.log(ms[type][param]);
-  console.log(ms[type][param](argument));
 
-  array = array.filter(ms[type][param](argument));
 
-  console.log(array);
+  array = isSwitch(type) ?
+    array.sort(ms[type][param](argument)) :
+    isSearchBy(type) ?
+      array.filter(ms[type][param](request)) :
+      array.filter(ms[type][param](argument));
 
   return [...array];
 }
 
 const filterBooks = booksState => {
-  let { books, filters } = booksState;
-  books = Object.entries(filters).reduce((acc, curr) => {
+  let { cache, filters } = booksState;
+  let books = Object.entries(filters).reduce((acc, curr) => {
     const [key, value] = curr;
     return !!value ? filterBy(acc, key, value) : acc;
-  }, books);
+  }, cache);
   return [...books];
 }
 
 const touchFilters = booksState => {
-  let { books, cache, filters } = booksState;
-  books = isAllFalse(Object.values(filters)) ? [...cache] : filterBooks(booksState);
+  let { cache, filters } = booksState;
+  const books = isAllFalse(Object.values(filters)) ? [...cache] : filterBooks(booksState);
   return { ...booksState, books };
 }
 
-const filtered = (booksState, changed, request) => {
+const filtered = (booksState, changed, request) => {  
   booksState = setFilter(booksState, changed, request);
-  booksState = touchFilters(booksState, changed, request);  
+  booksState = touchFilters(booksState, changed, request);
   return { ...booksState };
 }
 

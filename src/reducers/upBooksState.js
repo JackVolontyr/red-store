@@ -33,7 +33,7 @@ const upBooksState = (state, action) => {
     case 'FETCH_BOOKS_REQUEST': return { ...booksState, isLoading: true };
     // newBooks
     case 'FETCH_BOOKS_SUCCESS': return {
-      ...booksState, books: [...newBooks], cache: [...newBooks], cacheFilters: [...newBooks], isLoading: false
+      ...booksState, books: [...newBooks], cache: [...newBooks], isLoading: false
     };
     // error
     case 'FETCH_BOOKS_FAILURE': return { ...booksState, isLoading: false, error };

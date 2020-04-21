@@ -24,13 +24,25 @@ const optionsOf = (array, value, key = 'id') => {
 }
 // const { index, element } = optionsOf(array, id, 'id');
 
+const arrayToLowerCase = (...array) => array.map(item => item.toLowerCase());
+const isSub = (string, sub) => string.indexOf(sub) > -1
+const isNothing = string => string === ''
+
 const sortMethods = {
   toText: value => value.toString().split('_').join(' ').toLowerCase(),
   toKey: value => value.toString().split('_').join('').toLowerCase(),
   toParameter: value => value.toString().split('_')[1].toLowerCase(),
 
   searchby: {
-    'true': () => a => a.quantity > 0,
+    'true': request => book => {
+      let { title, author } = book;
+      [title, author, request] = arrayToLowerCase(title, author, request.trim())
+
+      if (isSub(title, request) || isSub(author, request)) {
+        return book;
+      }
+    },
+
     'false': () => a => a
   },
   instock: {

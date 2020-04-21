@@ -56,7 +56,6 @@ export default class BookstoreService {
     cover: 'https://www.booklya.ua/content/upload/product/183k/183841/800x800/560616/moby-dick.jpg',
     isInCart: false,
     rating: 4,
-
   }];
 
   getBooks = () => new Promise((resolve, reject) => setTimeout(() => {
