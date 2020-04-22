@@ -26,7 +26,6 @@ const optionsOf = (array, value, key = 'id') => {
 
 const arrayToLowerCase = (...array) => array.map(item => item.toLowerCase());
 const isSub = (string, sub) => string.indexOf(sub) > -1
-const isNothing = string => string === ''
 
 const sortMethods = {
   toText: value => value.toString().split('_').join(' ').toLowerCase(),

@@ -48,4 +48,9 @@ const upBooksState = (state, action) => {
   }
 }
 
-export { upBooksState, INIT_BOOKS_STATE };
+export { 
+  upBooksState, INIT_BOOKS_STATE, 
+  
+  // IDE/React-linter BUG
+  IN_STOCK, BY_RATING, BY_PRICE 
+};
