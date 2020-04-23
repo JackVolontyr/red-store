@@ -1,6 +1,6 @@
 import { unsetAllAsAdded, toggleAsAdded } from './upBooksState.added';
 import filtered from './upBooksState.filtered';
-import { IN_STOCK, BY_RATING, BY_PRICE, SEARCH_BY } from '../utils';
+import { SEARCH_BY } from '../utils';
 
 const INIT_FILTERS = { IN_STOCK: false, BY_RATING: false, BY_PRICE: false, SEARCH_BY: '' };
 const INIT_BOOKS_STATE = {
@@ -49,8 +49,5 @@ const upBooksState = (state, action) => {
 }
 
 export { 
-  upBooksState, INIT_BOOKS_STATE, 
-  
-  // IDE/React-linter BUG
-  IN_STOCK, BY_RATING, BY_PRICE 
+  upBooksState, INIT_BOOKS_STATE 
 };
