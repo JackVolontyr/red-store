@@ -5,15 +5,17 @@ import './App.css';
 import Header from '../Header';
 
 const App = () =>
-  <Fragment>
-    <Header />
-    <main role="main" className="container pb-5">
-      <Switch>
-        <Route path='/' component={HomePage} exact />
-        <Route path='/cart' component={CartPage} />
-      </Switch>
-    </main>
-  </Fragment>
+	<Fragment>
+		<Header />
+		<main role="main" className="container pb-5">
+			<Switch>
+				{/* <Route path='/' component={HomePage} exact />
+				<Route path='/cart' component={CartPage} /> */}
+				<Route path='/red-store-build/' component={HomePage} exact />
+				<Route path='/red-store-build/cart' component={CartPage} />
+			</Switch>
+		</main>
+	</Fragment>
 
 
 export default App;
