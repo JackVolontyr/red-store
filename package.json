@@ -1,7 +1,8 @@
 {
   "name": "red-store",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage" : "https://jackvolontyr.github.io/red-store-build/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -31,9 +32,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 3 safari version"
     ]
   }
 }
