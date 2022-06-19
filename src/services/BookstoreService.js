@@ -1,5 +1,15 @@
 export default class BookstoreService {
 	_data = [{
+		id: 0,
+		title: 'Kobzar',
+		author: 'Taras Hryhorovych Shevchenko',
+		price: 'invaluable',
+		currency: '',
+		quantity: 0,
+		cover: '/red-store-build/kobzar-bilingva.jpg',
+		isInCart: false,
+		rating: 5,
+	}, {
 		id: 1,
 		title: 'The Old Man and the Sea',
 		author: 'Ernest Hemmingway',
